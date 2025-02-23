@@ -159,4 +159,4 @@
 
 Let me know if you need further assistance!
 
-Refer to [Soltion](./Solution.md)
+Refer to [Soltion](./PEAN-Solution.md)
