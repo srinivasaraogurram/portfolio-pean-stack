@@ -1,77 +1,160 @@
-\# portfolio-pean-stack
+# Portfolio PEAN Stack Application
 
-Ideation/Story
+## Ideation/Story
 
-PEAN Application
+### PEAN Application
+- **Objective**: To create a personal dynamic website with a portfolio, blog, and services.
+- **PEAN Stack**:
+  - **P**: PostgreSQL (Database)
+  - **E**: Express.js (Backend Framework)
+  - **A**: Angular 18 (Frontend Framework)
+  - **N**: Node.js (Runtime Environment)
 
-\* To Create a Personal Dynamic website with Portfolio, Blog, Services
+---
 
-\* P Stands for Postgres DB
+## Application Features
 
-\* E Stands for Express JS
+### Three-Tier Architecture
 
-\* N Stands for NodeJS
+#### **Tier One: Database Tier**
+1. **PostgreSQL Database**:
+   - Use Docker Compose to set up PostgreSQL and pgAdmin.
+   - Provide instructions to initialize the schema and seed data on database startup within Docker Compose.
+   - Create a Dev Container for the above setup to use with VS Code.
 
-\* Application Features
+#### **Tier Two: Express.js (Backend)**
+1. **REST API**:
+   - Use Sequelize to create domain objects and manage database interactions.
+2. **Domain Objects**:
+   - **User**:
+     - Features: Login, Logout, Session Management, Roles.
+   - **Content Management**:
+     - **Pages**: Add, Update, Delete, Read.
+     - **Links**: Create menu links, Add, Update, Delete, Read.
+     - Map links to pages.
+   - **Blog Management**:
+     - Create, Update, Delete, and Read blog posts.
+   - **Portfolio**:
+     - Align with resume.
+     - Showcase projects similar to the portfolio site.
+3. **Schema Design**:
+   - Define the required schema, tables, and relationships using Sequelize.
 
-3 Tire Application
+#### **Tier Three: Angular 18 (Frontend)**
+1. **User Interface**:
+   - Create a beautiful and responsive UI based on the above features.
+2. **Wireframes**:
+   - Design HTML wireframes for the look and feel of the application.
+3. **Functional Pages**:
+   - Implement all functional pages using Angular.
 
-\* Tire One
+---
 
-DB tire
+## Step-by-Step Instructions
 
-To Create Postgres DB
+### **1. Database Tier Setup**
+1. **Docker Compose**:
+   - Create a `docker-compose.yml` file to set up PostgreSQL and pgAdmin.
+   ```yaml
+   version: '3.8'
+   services:
+     db:
+       image: postgres:latest
+       container_name: postgres_db
+       environment:
+         POSTGRES_USER: your_db_user
+         POSTGRES_PASSWORD: your_db_password
+         POSTGRES_DB: portfolio_db
+       ports:
+         - "5432:5432"
+       volumes:
+         - postgres_data:/var/lib/postgresql/data
 
-\* Use Docker Compose for Create Postgres and Admin
+     pgadmin:
+       image: dpage/pgadmin4
+       container_name: pgadmin
+       environment:
+         PGADMIN_DEFAULT_EMAIL: admin@example.com
+         PGADMIN_DEFAULT_PASSWORD: admin
+       ports:
+         - "5050:80"
+       depends_on:
+         - db
 
-\* Provide Instructions to increase scheme and seed data on db start with in Docker Compose
+   volumes:
+     postgres_data:
+   ```
 
-\* Create Dev Container for above to use with VSCode
+2. **Schema and Seed Data**:
+   - Create SQL scripts to initialize the schema and seed data.
+   - Place these scripts in a `scripts` folder and reference them in the Docker Compose file.
 
-\* Tire Two
+3. **Dev Container**:
+   - Create a `.devcontainer` folder with `Dockerfile` and `devcontainer.json` for VS Code.
 
-Express
+---
 
-\* Create rest api
+### **2. Backend Setup (Express.js)**
+1. **Initialize Express App**:
+   ```bash
+   mkdir backend
+   cd backend
+   npm init -y
+   npm install express sequelize pg pg-hstore cors body-parser express-session bcrypt dotenv
+   ```
 
-\* use Sequelize
+2. **Sequelize Setup**:
+   - Initialize Sequelize:
+     ```bash
+     npx sequelize-cli init
+     ```
+   - Define models for `User`, `Page`, `Link`, `Blog`, and `Portfolio`.
 
-to create domain objects
+3. **REST API**:
+   - Create routes and controllers for:
+     - User authentication (login, logout, session management).
+     - Content management (pages, links).
+     - Blog management.
+     - Portfolio management.
 
-\* User
+---
 
-Login, logout , Session Management, Roles,
+### **3. Frontend Setup (Angular 18)**
+1. **Initialize Angular App**:
+   ```bash
+   ng new frontend
+   cd frontend
+   npm install @angular/common@latest @angular/core@latest
+   ```
 
-\* Content Management
+2. **Create Components**:
+   - Generate components for:
+     - Login, Register, Profile.
+     - Pages, Links, Blog, Portfolio.
 
-Pages
+3. **Wireframes**:
+   - Design wireframes using tools like Figma or Sketch.
 
-Added New Page, Update Page, Delete Page, Read Page
+4. **Functional Pages**:
+   - Implement pages using Angular components and services.
 
-Links
+---
 
-Create Menu Links
+### **4. Integration**
+1. **Connect Frontend to Backend**:
+   - Use Angular's `HttpClient` to interact with the Express backend.
 
-Add Menu Links, Update, Delete, Read
+2. **Session Management**:
+   - Use Express sessions for authentication and session management.
 
-Map Links to page
+3. **Deployment**:
+   - Deploy the application using platforms like Heroku, Vercel, or AWS.
 
-\* Blog Management
+---
 
-\* Create Portfolio which is aligned to Resume
+## Final Notes
+- Ensure proper error handling and validation at both the backend and frontend.
+- Use environment variables for sensitive information.
+- Test the application thoroughly before deployment.
 
-Projects Similar to Portfolio Site
-
-Based on the above features create the required schema, related tables and relationships using sequelize
-
-\* Tire Three
-
-Angular 18
-
-Create Beautifle user inteface based on above features
-
-Created Html wirefame for look and feel
-
-Create all the functional pages using Angular
-
-Give complete application with step by step instructions
+Let me know if you need further assistance!
